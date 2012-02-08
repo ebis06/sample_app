@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120117050752) do
+ActiveRecord::Schema.define(:version => 20120201203818) do
+
+  create_table "routes", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "image_url"
+    t.string   "trace_file_name"
+    t.decimal  "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "content_type"
+    t.binary   "data",            :limit => 1048576
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

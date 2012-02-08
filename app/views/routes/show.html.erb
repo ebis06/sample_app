@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+<div class="container">
+	  <h1>Liste des Défis Alpins</h1>
+   <hr>
+   <h2 class="alt">  <%= @route.title %> </h2>
+   <hr>
+
+   <div class="span-7 colborder">
+     <h6>Description</h6>
+     <p><%= @route.description %></p>
+   </div>
+
+   <div class="span-8 colborder">
+     <h6>And another box</h6>
+     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat laboris nisi ut aliquip.</p>
+   </div>
+	
+	<script type="text/javascript" src="http://api.ign.fr/geoportail/api?v=1.0&amp;key=7901814767869052923&amp;instance=VISU"></script>
+	<script type="text/javascript">
+
+	var tracelayer;
+
+	function initGeoportalMap()	{
+	  var styleMapSimple = new OpenLayers.StyleMap({
+	    strokeColor: '#FF0000',
+	    strokeWidth: 3,
+	    strokeOpacity: 1
+	    });
+	  
+	  var gpx_name = '/system/traces/<%= @route.id %>/original/<%= @route.trace_file_name  %>'; // for string
+	  //var gpx_name = '/system/traces/<%= @route.id %>/original/test.gpx'; // for string
+		
+	  geoportalLoadVISU("GeoportalVisuDiv", "normal");
+
+	  VISU.addGeoportalLayer("ORTHOIMAGERY.ORTHOPHOTOS", {visibility:false});
+	  VISU.addGeoportalLayer("GEOGRAPHICALGRIDSYSTEMS.MAPS", {opacity: 0.5});
+
+	  //tracelayer = VISU.getMap().addLayer("GPX","Parcours",'/files/test.gpx',{visibility:true,minZoomLevel:0,maxZoomLevel:100,styleMap: styleMapSimple});
+	  tracelayer = VISU.getMap().addLayer("GPX","Parcours",gpx_name,{visibility:true,minZoomLevel:0,maxZoomLevel:100,styleMap: styleMapSimple});
+	
+	  tracelayer.events.register('loadend',tracelayer, function(e){zoomToFit();});
+	}
+
+	function zoomToFit() {
+	  VISU.getMap().zoomToExtent(tracelayer.getDataExtent());
+	}
+
+	</script>
+	
+	<div id="GeoportalVisuDiv" style="width:600px;height:400px;"></div>
+
+<p>
+  <b>Title:</b>
+  <%= @route.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @route.description %>
+</p>
+
+<p>
+  <b>Image url:</b>
+  <%= @route.image_url %>
+</p>
+
+<p>
+  <b>Trace:</b>
+  <%= @route.trace_file_name %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @route.price %>
+</p>
+
+
+<%= link_to 'Edit', edit_route_path(@route) %> |
+<%= link_to 'Back', routes_path %>
