@@ -11,18 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120201203818) do
+ActiveRecord::Schema.define(:version => 20120217210354) do
 
   create_table "routes", :force => true do |t|
     t.string   "title"
     t.text     "description"
-    t.string   "image_url"
+    t.string   "image_file_name"
     t.string   "trace_file_name"
     t.decimal  "price"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "content_type"
-    t.binary   "data",            :limit => 1048576
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_uploaded_at"
   end
 
   create_table "users", :force => true do |t|
